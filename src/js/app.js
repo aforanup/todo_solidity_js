@@ -93,7 +93,7 @@ App = {
       
       for (var i=1; i<=taskCount; i++){
         todoInstance.tasks(i).then((task)=>{
-          taskList.append(`<li class="list-group-item border-0" id="task_${task[0]}" onclick="App.completed(${task[0]})">${task[1]}</li>`)
+          taskList.append(`<li class="list-group-item border-0" id="task_${task[0]}" onclick="App.completed(${task[0]})" style="text-decoration: <%=${task[3]} ? 'line-through' : 'none'">${task[1]}</li>`)
           // console.log(todoInstance.task[i])
         })
       }
