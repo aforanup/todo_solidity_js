@@ -66,15 +66,6 @@ App = {
     });
   },
 
-
-  // addTask: function(){
-  //   newTask = $("#task").val();
-
-  //   App.contracts.TodoList.deployed().then((instance)=>{
-  //     instance.createTodo
-  //   })
-  // },
-
   render: function(){
     var todoInstance;
     var loading = $("#loading");
@@ -93,19 +84,15 @@ App = {
       
       for (var i=1; i<=taskCount; i++){
         todoInstance.tasks(i).then((task)=>{
-          taskList.append(`<li class="list-group-item border-0" id="task_${task[0]}" onclick="App.completed(${task[0]})" style="text-decoration: <%=${task[3]} ? 'line-through' : 'none'">${task[1]}</li>`)
-          // console.log(todoInstance.task[i])
+          if(task[2]){
+            taskList.append(`<li class="list-group-item border-0" id="task_${task[0]}" onclick="App.completed(${task[0]})" style="text-decoration:line-through">${task[1]}</li>`)
+          }
+          else{
+            taskList.append(`<li class="list-group-item border-0" id="task_${task[0]}" onclick="App.completed(${task[0]})">${task[1]}</li>`)
+          }
         })
       }
-      // var taskList = $("#listItems"); 
-      // taskList.empty();
-      // console.log(taskCount)
-      // instance.tasks(i).then((task)=>{
-        // for (var i=1; i<=taskCount; i++){
-        //   console.log(todoInstance.tasks[i])
-        //   taskList.append(`<li class="list-group-item border-0">${todoInstance.tasks[i]}</li>`)
-        // }
-        
+
       })
     
     loading.hide();
