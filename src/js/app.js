@@ -30,14 +30,14 @@ App = {
     });
   },
   
-  todoCreatedEvent: function() {
+  todoCreatedEvent: function() {   
     App.contracts.TodoList.deployed().then(function(instance) {
       instance.TodoCreated({},{
-        fromBlock:0,
+        fromBlock:"latest",
         toBlock:"latest"
       }).watch(function(error, event){
-        console.log("event triggered", event);
-        return App.render(); 
+        console.log("Event triggered:", event);
+        App.render();
       });
     });
   },
@@ -48,7 +48,7 @@ App = {
     App.contracts.TodoList.deployed().then(function(instance){
       return instance.createTodo(task, {from: App.account});
     }).then(function(result){
-      $("#task").empty()
+      $("#task").val("")
       // loading.show();
       // loaded.hide();
     })
@@ -81,11 +81,9 @@ App = {
   },
 
   render: function(){
-    console.log("render");
     var todoInstance;
     var loading = $("#loading");
     var loaded = $("#loaded")
-    $("#listItems").empty()
 
     loading.show();
     loaded.hide();
