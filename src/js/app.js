@@ -24,8 +24,21 @@ App = {
     $.getJSON("TodoList.json", (todolist) => {
       App.contracts.TodoList = TruffleContract(todolist);
       App.contracts.TodoList.setProvider(App.web3Provider);
-
+      App.todoCreatedEvent();
+      
       return App.render();
+    });
+  },
+  
+  todoCreatedEvent: function() {
+    App.contracts.TodoList.deployed().then(function(instance) {
+      instance.TodoCreated({},{
+        fromBlock:0,
+        toBlock:"latest"
+      }).watch(function(error, event){
+        console.log("event triggered", event);
+        return App.render(); 
+      });
     });
   },
 
@@ -35,8 +48,9 @@ App = {
     App.contracts.TodoList.deployed().then(function(instance){
       return instance.createTodo(task, {from: App.account});
     }).then(function(result){
-      loading.show();
-      loaded.hide();
+      $("#task").empty()
+      // loading.show();
+      // loaded.hide();
     })
   },
   completed: function(id){
@@ -67,9 +81,11 @@ App = {
   },
 
   render: function(){
+    console.log("render");
     var todoInstance;
     var loading = $("#loading");
     var loaded = $("#loaded")
+    $("#listItems").empty()
 
     loading.show();
     loaded.hide();

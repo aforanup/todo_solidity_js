@@ -12,6 +12,8 @@ contract TodoList {
         // address currentUser;
     }
 
+    event TodoCreated(string _message);
+
     // mapping(address => mapping(uint => Todo)) public tasks;
     mapping(uint => Todo) public tasks;
 
@@ -24,6 +26,7 @@ contract TodoList {
     function createTodo(string memory _task) public {
         taskCount++;
         tasks[taskCount] = Todo(taskCount, _task, false, false);
+        emit TodoCreated(_task);
     }
 
     function todoComplete(uint _id) public {
