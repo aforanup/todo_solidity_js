@@ -17,11 +17,10 @@ contract TodoList {
     // mapping(address => mapping(uint => Todo)) public tasks;
     mapping(uint => Todo) public tasks;
 
-    // constructor() public {
-    //     createTodo("This is the first task");
-    //     createTodo("This is the Second task");
-    //     createTodo("This is the Third task");
-    // }
+    constructor() public {
+        createTodo("This is the first task");
+        createTodo("This is the Second task");
+    }
 
     function createTodo(string memory _task) public {
         taskCount++;
